@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/launcher_name"
+        android:theme="@style/MikuTanTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 初回起動時の使い方ガイド。MainActivity から呼ぶだけなので exported しない。 -->
+        <activity
+            android:name=".GuideActivity"
+            android:exported="false"
+            android:theme="@style/MikuTanTheme" />
+
+        <!-- 設定画面とプロンプト編集。いずれもアプリ内からのみ。 -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:theme="@style/MikuTanTheme" />
+
+        <activity
+            android:name=".PromptEditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/MikuTanTheme" />
+
+        <!-- テキスト選択メニューの受け口。
+             label は選択ツールバーに出る文字なので短くする（"ミク単"）。
+             PROCESS_TEXT は編集可能欄と読み取り専用（Web/メール本文）の
+             両方から飛んでくるので、CaptureActivity 側で
+             EXTRA_PROCESS_TEXT_READONLY も読む。 -->
+        <activity
+            android:name=".CaptureActivity"
+            android:label="@string/capture_label"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/MikuTanOverlay">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- 共有メニューからの受け口。長押し選択ができず「共有」しか
+                 出さないアプリ（ビリビリのコメント、電子書籍など）向け。
+                 選択ツールバーと違い、共有シートは使用頻度で並び替わる。 -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

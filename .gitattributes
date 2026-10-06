@@ -1,0 +1,11 @@
+# 改行コードを OS に依存させない
+* text=auto eol=lf
+
+# gradlew はシェルスクリプト。CRLF だと Mac / Linux で実行できない
+gradlew text eol=lf
+# Windows 用のバッチは CRLF
+*.bat text eol=crlf
+
+# バイナリ
+*.png binary
+*.jar binary

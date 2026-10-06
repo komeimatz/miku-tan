@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ダークモード（システム設定に自動追従） -->
+    <color name="lw_bg">#121212</color>
+    <color name="lw_text">#FFFFFF</color>
+    <color name="lw_text_sub">#AAAAAA</color>
+    <color name="lw_divider">#33FFFFFF</color>
+</resources>

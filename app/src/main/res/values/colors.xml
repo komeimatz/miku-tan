@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ブランドカラー（ライト/ダーク共通） -->
+    <color name="lw_button">#86CECB</color>
+    <color name="lw_accent">#E12885</color>
+    <color name="lw_button_text">#000000</color>
+
+    <!-- ライトモード -->
+    <color name="lw_bg">#FFFFFF</color>
+    <color name="lw_text">#000000</color>
+    <color name="lw_text_sub">#666666</color>
+    <color name="lw_divider">#22000000</color>
+</resources>

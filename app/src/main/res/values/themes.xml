@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- minSdk 29 になったので DayNight が常に使える。
+         以前あった values-v29/themes.xml は、この定義に統合して削除した。
+         色は values/colors.xml と values-night/colors.xml で切り替わる。
+
+         windowActionBar / windowNoTitle を落としているのは、
+         タイトルを自前でリストの先頭行として描くため（帯が二重になるのを防ぐ）。 -->
+    <style name="MikuTanTheme" parent="@android:style/Theme.DeviceDefault.DayNight">
+        <item name="android:windowBackground">@color/lw_bg</item>
+        <item name="android:textColor">@color/lw_text</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- キャプチャ時のオーバーレイ用（透過・タイトルなし） -->
+    <style name="MikuTanOverlay" parent="@android:style/Theme.Translucent.NoTitleBar" />
+</resources>

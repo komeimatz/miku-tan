@@ -1,0 +1,23 @@
+# 手元専用（作者の環境・個人的なメモ）。公開用の手引きは AGENTS.md
+CLAUDE.md
+RELEASE.md
+# ガイド画像の元スクショと加工スクリプト（他社アプリの画面を含むため非公開）
+design/
+
+# Android / Gradle（local.properties は SDK の場所。環境依存）
+local.properties
+.gradle/
+.kotlin/
+build/
+app/build/
+*.apk
+*.aab
+
+# 署名鍵（絶対にコミットしない）
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.DS_Store

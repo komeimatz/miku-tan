@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- アイコンの背景。白黒アイコンの方針（白黒フィルタ下でも輪郭が立つ）に合わせて白。 -->
+    <color name="ic_launcher_bg">#FFFFFF</color>
+</resources>

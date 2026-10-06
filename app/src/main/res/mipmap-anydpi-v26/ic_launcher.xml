@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- アダプティブアイコン。
+     前景 … ミクさんの丸絵（432px 画用紙の中央 264px ＝ 108dp 中の 66dp 安全域）
+     背景 … 白 1 色
+     単色 … テーマアイコン（Android 13+）用。前景の線だけを抜き出したもの。
+            この層は OS が壁紙の色で塗り直すので、色は付けない。
+     切り抜きの形（丸・角丸など）は端末のランチャーが決める。 -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_launcher_bg" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <monochrome android:drawable="@mipmap/ic_launcher_monochrome" />
+</adaptive-icon>
