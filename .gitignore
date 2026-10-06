@@ -13,9 +13,10 @@ app/build/
 *.apk
 *.aab
 
-# 署名鍵（絶対にコミットしない）
+# 署名鍵とそのパスワード（絶対にコミットしない）
 *.jks
 *.keystore
+keystore.properties
 
 # IDE
 .idea/
