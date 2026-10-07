@@ -4,6 +4,9 @@
     <color name="lw_button">#86CECB</color>
     <color name="lw_accent">#E12885</color>
     <color name="lw_button_text">#000000</color>
+    <!-- ガイド画像の額縁。lw_button のティールを暗くしたもの。
+         ライトでもダークでも画面から浮いて「説明の図」だと分かるよう共通にしている -->
+    <color name="lw_guide_frame">#2C6E6B</color>
 
     <!-- ライトモード -->
     <color name="lw_bg">#FFFFFF</color>

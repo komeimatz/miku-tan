@@ -149,15 +149,12 @@ class GuideActivity : Activity() {
     private fun currentPage() = current
 
     private fun buildTutorialPage(number: Int, body: String, pad: Int): View {
-        val box = newPageBox(pad)
+        // 図の額縁は画面の左右の端まで届かせるので、横の余白は本文の側にだけ付ける
+        val box = newPageBox(pad).apply { setPadding(0, pad, 0, pad) }
 
         val art = drawableId("guide_$number")
         val imageArea: View = if (art != 0) {
-            ImageView(this).apply {
-                setImageResource(art)
-                adjustViewBounds = true
-                scaleType = ImageView.ScaleType.FIT_CENTER
-            }
+            framedImage(art)
         } else {
             // 画像が未用意の間の仮置き。枠だけ描いて、何を入れる場所か書いておく。
             val line = color(R.color.lw_divider)
@@ -175,7 +172,9 @@ class GuideActivity : Activity() {
         }
         box.addView(
             imageArea,
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f)
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f).apply {
+                if (art == 0) setMargins(pad, 0, pad, 0)
+            }
         )
 
         box.addView(TextView(this).apply {
@@ -184,10 +183,48 @@ class GuideActivity : Activity() {
             gravity = Gravity.CENTER
             setLineSpacing(0f, 1.4f)
             setTextColor(color(R.color.lw_text))
-            setPadding(0, (24 * dp).toInt(), 0, (8 * dp).toInt())
+            setPadding(pad, (24 * dp).toInt(), pad, (8 * dp).toInt())
         })
 
         return box
+    }
+
+    /**
+     * ガイド画像に暗いティールの額縁を付けて、額縁の外側が画面の幅いっぱいになる大きさで中央に置く
+     * （背の低い画面で縦が足りなければ、縦に合わせて縮める）。
+     * スクショがそのまま画面いっぱいに出ると、本物の画面と見分けがつかず「説明の図」だと分かりにくいため。
+     * 額縁は画像の縦横比にぴったり沿わせたいので、領域の大きさが決まってから寸法を計算して当てる。
+     */
+    private fun framedImage(art: Int): View {
+        val border = (FRAME_DP * dp).toInt()
+        val image = ImageView(this).apply {
+            setImageResource(art)
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            setPadding(border, border, border, border)
+            background = GradientDrawable().apply {
+                cornerRadius = FRAME_RADIUS_DP * dp
+                setColor(color(R.color.lw_guide_frame))
+            }
+        }
+        val area = FrameLayout(this)
+        area.addView(image, FrameLayout.LayoutParams(0, 0, Gravity.CENTER))
+        area.addOnLayoutChangeListener { _, l, t, r, b, ol, ot, or, ob ->
+            if (r - l == or - ol && b - t == ob - ot) return@addOnLayoutChangeListener
+            val d = image.drawable ?: return@addOnLayoutChangeListener
+            val maxW = (r - l).toFloat()
+            val maxH = (b - t).toFloat()
+            // 額縁の内側に、画像を縦横比のまま最大で収める
+            val scale = minOf(
+                (maxW - 2 * border) / d.intrinsicWidth,
+                (maxH - 2 * border) / d.intrinsicHeight
+            )
+            val lp = image.layoutParams
+            lp.width = (d.intrinsicWidth * scale).toInt() + 2 * border
+            lp.height = (d.intrinsicHeight * scale).toInt() + 2 * border
+            // レイアウト中なので、寸法の反映は次の周回に回す
+            area.post { image.layoutParams = lp }
+        }
+        return area
     }
 
     /** 最後のページ。ここで選んだ言語が既定プロンプトになる。 */
@@ -413,6 +450,13 @@ class GuideActivity : Activity() {
 
         /** めくりアニメの長さ(ms)。 */
         private const val SETTLE_MS = 170L
+
+        // ガイド画像の額縁
+        /** 額縁の太さ(dp)。 */
+        private const val FRAME_DP = 30f
+
+        /** 額縁の外側の角の丸み(dp)。内側は角ばったままにして、絵の角を欠かさない。 */
+        private const val FRAME_RADIUS_DP = 18f
 
         /** まだ一度も見ていないか。MainActivity から初回だけ出すのに使う。 */
         fun shouldShow(ctx: Context): Boolean =
