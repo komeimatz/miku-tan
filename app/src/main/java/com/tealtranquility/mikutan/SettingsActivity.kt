@@ -7,6 +7,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -153,13 +158,7 @@ class SettingsActivity : Activity() {
             gravity = Gravity.CENTER
             setTextColor(getColor(R.color.lw_button))
             setPadding(0, (8 * dp).toInt(), 0, (8 * dp).toInt())
-            setOnClickListener {
-                try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(CONTACT_URL)))
-                } catch (_: ActivityNotFoundException) {
-                    toast("リンクを開けるアプリがありません（$CONTACT_URL）")
-                }
-            }
+            setOnClickListener { openLink(CONTACT_URL) }
         })
 
         // 不具合報告のときに「どのバージョン？」を聞かなくて済むように出しておく
@@ -169,6 +168,34 @@ class SettingsActivity : Activity() {
             gravity = Gravity.CENTER
             setTextColor(getColor(R.color.lw_text_sub))
             setPadding(0, (12 * dp).toInt(), 0, 0)
+        })
+
+        // PCL クレジット。PCL 第 3 条第 3 項と、クリプトンのキャラクター利用ガイドラインに沿って、
+        // ①PCL による許諾 ②PCL の URL ③キャラクター名 ④社名 を出す。
+        // 名前とアイコンにミクさんを使っているので、公式アプリと誤解されないよう「非公式」も明記する
+        // （ガイドラインは「公式製品のような誤解を招く利用」を禁じている）。
+        // APK は単体でも人の手に渡るので、README だけでなくアプリ自体に載せておく。
+        box.addView(TextView(this).apply {
+            val license = "ピアプロ・キャラクター・ライセンス"
+            val body = "このアプリは非公式のファン作品です。\n" +
+                "イラストは、${license}に基づいて、クリプトン・フューチャー・メディア株式会社の" +
+                "キャラクター「初音ミク」を描いたものです。"
+            val start = body.indexOf(license)
+            text = SpannableString(body).apply {
+                setSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) = openLink(PCL_URL)
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        ds.color = getColor(R.color.lw_button)
+                    }
+                }, start, start + license.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            movementMethod = LinkMovementMethod.getInstance()
+            textSize = 11f
+            gravity = Gravity.CENTER
+            setLineSpacing(0f, 1.3f)
+            setTextColor(getColor(R.color.lw_text_sub))
+            setPadding(0, (20 * dp).toInt(), 0, (8 * dp).toInt())
         })
 
         root.addView(ScrollView(this).apply {
@@ -350,6 +377,15 @@ class SettingsActivity : Activity() {
     }
 
     /** 「ミク単  v0.1 (1)」のような表示。 */
+    /** リンクはブラウザ（または X アプリ）に開かせる。このアプリはネット権限を持たない。 */
+    private fun openLink(url: String) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (_: ActivityNotFoundException) {
+            toast("リンクを開けるアプリがありません（$url）")
+        }
+    }
+
     private fun versionLabel(): String = runCatching {
         val pi = packageManager.getPackageInfo(packageName, 0)
         "${getString(R.string.app_name)}  v${pi.versionName} (${pi.longVersionCode})"
@@ -364,5 +400,6 @@ class SettingsActivity : Activity() {
         /** アイディア・バグ報告の窓口（X）。 */
         private const val CONTACT_HANDLE = "MikuTealSerene"
         private const val CONTACT_URL = "https://x.com/$CONTACT_HANDLE"
+        private const val PCL_URL = "https://piapro.jp/license/pcl/summary"
     }
 }

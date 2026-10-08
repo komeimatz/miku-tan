@@ -22,8 +22,8 @@ android {
         // これ未満だと WRITE_EXTERNAL_STORAGE の権限ダイアログが必要になるため引き上げた。
         minSdk = 29
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = 2
+        versionName = "0.1.1"
     }
 
     signingConfigs {

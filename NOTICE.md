@@ -23,16 +23,17 @@ The following illustrations are **excluded from the license above**. No permissi
 - `app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png`
 - `app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png`
 
-これらは、クリプトン・フューチャー・メディア株式会社の
-**ピアプロ・キャラクター・ライセンス（PCL）** に基づき、非営利・無償で制作した
-初音ミクの二次創作物です。
+このアプリは**非公式のファン作品**です。
+これらのイラストは、**ピアプロ・キャラクター・ライセンス（PCL）** に基づいて、
+クリプトン・フューチャー・メディア株式会社のキャラクター「初音ミク」を描いたものです（非営利・無償）。
 初音ミクの権利はクリプトン・フューチャー・メディア株式会社に帰属します。
 
-These are noncommercial, free fan works of Hatsune Miku, created under the
-**Piapro Character License (PCL)** by Crypton Future Media, INC.
+This app is an **unofficial fan work**.
+These illustrations depict the character "Hatsune Miku" of Crypton Future Media, INC.,
+created noncommercially and free of charge under the **Piapro Character License (PCL)**.
 Hatsune Miku is a trademark / copyrighted character of Crypton Future Media, INC.
 
-- ピアプロ・キャラクター・ライセンス: https://piapro.jp/license/pcl
+- ピアプロ・キャラクター・ライセンス: https://piapro.jp/license/pcl/summary
 
 改造版を配布する場合は、これらのイラストを取り除き、ご自身で用意したものに差し替えてください。
 
